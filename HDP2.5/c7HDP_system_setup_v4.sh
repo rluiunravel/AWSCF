@@ -43,6 +43,8 @@ service ntpd start
 
 yum install -y wget
 yum install -y unzip
+yum install -y git
+yum install -y dos2unix
 wget --no-check-certificate https://s3.amazonaws.com/unravelrpm/jdk-8u112-linux-x64.rpm
 yum localinstall -y jdk-8u112-linux-x64.rpm
 export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
