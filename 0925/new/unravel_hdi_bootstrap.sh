@@ -1,9 +1,12 @@
 #! /bin/bash
 
-############################################################################################
-# HDInsight action script for Unravel Server from Unravel Data Systems, Inc.               #
-#                                                                                          #
-############################################################################################
+################################################################################################
+# Unravel for HDInsight Bootstrap Script                                                       #
+#                                                                                              #
+# The bootstrap script log is located at /media/ephemeral0/logs/others/node_bootstrap.log      #
+################################################################################################
+
+[ ! -z "$VERBOSE" ] && set -x
 
 
 
@@ -775,7 +778,7 @@ MINIMUM_RUN_SEC=5
 while true ; do
   # nanny loop
   START_AT=\$(date +%s)
-  java -server -Xmx2g -Xms2g -jar /usr/local/\${IDENT}/unravel-emr-sensor.jar $ES_CLUSTER_TYPE_SWITCH $CLUSTER_ID_ARG $CHUNK_ARG --unravel-server \$UNRAVEL_HOST $* > \${IDENT}.out  2>&1
+  java -server -Xmx2g -Xms2g -cp /usr/local/\${IDENT}/lib/* -jar /usr/local/\${IDENT}/unravel-emr-sensor.jar $ES_CLUSTER_TYPE_SWITCH $CLUSTER_ID_ARG $CHUNK_ARG --unravel-server \$UNRAVEL_HOST $* > \${IDENT}.out  2>&1
 
   CHILD_PID=\$!
   # if this script gets INT or TERM, then clean up child process and exit
@@ -1474,6 +1477,7 @@ function install_usage() {
     echo "  --hive-version     installed hive version" | tee -a ${OUT_FILE}
     echo "  --spark-version    installed spark version" | tee -a ${OUT_FILE}
     echo "  --spark-load-mode  sensor mode [DEV | OPS | BATCH]" | tee -a ${OUT_FILE}
+    echo "  --env              comma separated <key=value> env variables" | tee -a ${OUT_FILE}
 }
 
 function install_hivehook() {
@@ -1595,6 +1599,12 @@ function install() {
                 ;;
             --spark-load-mode )
                 export SPARK_APP_LOAD_MODE=$1
+                shift
+                ;;
+            --env)
+                for ENV in "$(echo $1 | tr ',' ' ')"; do
+                  eval "export $ENV"
+                done
                 shift
                 ;;
             * )
@@ -1955,13 +1965,10 @@ export UNRAVEL_SPARK_DEST_OWNER="root:root"
 export SPARK_SENSOR_JARS=${UNRAVEL_SPARK_DEST}/jars
 
 function should_install_spark_conf() {
-  # conf is managed by Ambari
   [ "$HOST_ROLE" == "master" ] && return 0 || return 1
 }
 
 function spark_install_impl() {
-
-
     isFunction spark_env_setup && spark_env_setup
     fetch_sensor_zip
 
@@ -2150,188 +2157,20 @@ function spark_postinstall_check_impl() {
 
 }
 
+# dump the contents of env variables and shell settings
+debug_dump
 
+# do not make this script errors abort the whole bootstrap
+allow_errors
 
-
-
-# Unravel integration - uninstallation support
-
-function uninstall_usage() {
-    echo "Usage: uninstall <options>" | tee -a ${OUT_FILE}
-    echo "Supported options:" | tee -a ${OUT_FILE}
-    echo "  -y                 unattended uninstall" | tee -a ${OUT_FILE}
-    echo "  -v                 verbose" | tee -a ${OUT_FILE}
-    echo "  -h                 usage" | tee -a ${OUT_FILE}
-}
-
-function uninstall_hivehook() {
-    if isFunction can_install_hivehook; then
-        can_install_hivehook
-        if [ ! $? ]; then
-            echo "Node is not eligible for Unravel HiveHook installation. Skipping" | tee -a ${OUT_FILE}
-            return
-        fi
-    fi
-
-    if hivehook_already_installed; then
-        if [ -z "$UNATTENDED" ]; then
-          read -p 'Uninstall Unravel hivehook? [Yn]: ' res
-          case $res in
-                [nN]) return ;;
-                [yY]) ;; #continue
-                ?) return ;;
-          esac
-        fi
-
-        echo "Uninstalling Unravel hivehook ..." | tee -a ${OUT_FILE}
-
-        hivehook_setup uninstall
-        echo "... done" | tee -a ${OUT_FILE}
-    else
-        echo "Unravel hivehook hasn't been installed. Aborting" | tee -a ${OUT_FILE}
-    fi
-}
-
-function uninstall_es() {
-    if isFunction can_install_es; then
-        can_install_es
-        if [ ! $? ]; then
-            echo "Node is not eligible for unravel_es installation. Skipping" | tee -a ${OUT_FILE}
-            return
-        fi
-    fi
-
-    if es_already_installed; then
-        if [ -z "$UNATTENDED" ]; then
-            read -p 'Uninstall Unravel MR sensor (unravel_es)? [Yn]: ' res
-            case $res in
-                [nN]) return ;;
-                [yY]) ;; #continue
-                ?) return ;;
-            esac
-        fi
-
-        echo "Uninstalling Unravel MR sensor (unravel_es)" | tee -a ${OUT_FILE}
-
-        es_setup uninstall
-    else
-        echo "Unravel MR sensor (unravel_es) hasn't been installed. Aborting" | tee -a ${OUT_FILE}
-    fi
-}
-
-function uninstall_spark() {
-    if isFunction can_install_spark; then
-        can_install_spark
-        if [ ! $? ]; then
-            echo "Node is not eligible for Unravel Spark sensor installation. Skipping" | tee -a ${OUT_FILE}
-            return
-        fi
-    fi
-
-    if spark_already_installed; then
-        if [ -z "$UNATTENDED" ]; then
-            read -p 'Uninstall Unravel Spark sensor? [Yn]: ' res
-            case $res in
-                [nN]) return ;;
-                [yY]) ;; #continue
-                ?) return ;;
-            esac
-        fi
-
-        echo "Uninstalling Unravel Spark sensor ..." | tee -a ${OUT_FILE}
-
-        spark_setup uninstall
-        echo "... done" | tee -a ${OUT_FILE}
-    else
-        echo "Unravel Spark sensor hasn't been installed. Aborting" | tee -a ${OUT_FILE}
-    fi
-}
-
-function uninstall_agents() {
-    if [ -d $AGENT_DST ]; then
-        if [ -z "$UNATTENDED" ]; then
-            read -p 'Uninstall Unravel Agent Pack? [Yn]: ' res
-            case $res in
-                [nN]) return ;;
-                [yY]) ;; # continue
-                ?) return ;;
-            esac
-        fi
-        echo "Uninstalling Unravel Agent Pack ..." | tee -a ${OUT_FILE}
-
-        sudo rm -rf $AGENT_DST
-        echo "... done" | tee -a ${OUT_FILE}
-    else
-        echo "Unravel Agent Pack hasn't been installed. Aborting" | tee -a ${OUT_FILE}
-    fi
-}
-
-
-function uninstall() {
-    # parse arguments
-    while [ "$1" ]; do
-        opt=$1
-        shift
-        case $opt in
-            -y )
-                export UNATTENDED=yes ;;
-            -n )
-                export DRYRUN=yes ;;
-            -v )
-                set -x ;;
-            -h )
-                uninstall_usage ;;
-            * )
-                echo "Invalid option $opt" | tee -a ${OUT_FILE}
-                uninstall_usage
-                exit 1
-                ;;
-        esac
-    done
-
-    # detect the cluster and settings
-    cluster_detect
-
-    # dump the contents of env variables and shell settings
-    debug_dump
-
-    if [ -z "$UNATTENDED" ]; then
-        echo
-        echo "================================="
-        echo "Unravel cleanup for $PLATFORM clusters"
-        echo "================================="
-        echo "This script will remove the Unravel integration for $PLATFORM cluster"
-
-        read -p "Press Enter to continue or Ctrl-C to abort: "
-    fi
-
-    uninstall_hivehook
-    uninstall_es
-    uninstall_spark
-    uninstall_agents
-}
-
-
-function setup_usage() {
-  local script_name=$(basename ${BASH_SOURCE[0]})
-  echo "$script_name [install|uninstall] <options>" | tee -a ${OUT_FILE}
-  echo "Supported options depend on the setup mode (install or uninstall)" | tee -a ${OUT_FILE}
-  echo "For more information about supported options use one of the following commands:" | tee -a ${OUT_FILE}
-  echo "  ./$script_name install -h" | tee -a ${OUT_FILE}
-  echo "  ./$script_name uninstall -h" | tee -a ${OUT_FILE}
-}
-
-if [ 0 -eq $# ]; then
-    setup_usage
-    exit 0
+if [ -z "$UNRAVEL_SERVER" ]; then
+  echo "'UNRAVEL_SERVER' value not provided"
+  exit 0
 fi
 
-COMMAND=$1
-shift
+ARGS="-y --unravel-server ${UNRAVEL_SERVER}"
+[ ! -z "$HIVE_VER_XYZ" ] && ARGS+=" --hive-version $HIVE_VER_XYZ"
+[ ! -z "$SPARK_VER_XYZ" ] && ARGS+=" --spark-version $SPARK_VER_XYZ"
 
-case $COMMAND in
-  install ) install $* ;;
-  uninstall ) uninstall $* ;;
-  * ) setup_usage ;;
-esac
+install $ARGS
 
