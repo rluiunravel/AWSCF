@@ -2051,6 +2051,9 @@ function install_spark_conf_impl() {
 
   stopServiceViaRest SPARK
   startServiceViaRest SPARK
+  
+  stopServiceViaRest SPARK2
+  startServiceViaRest SPARK2
 }
 
 function uninstall_spark_conf_impl() {
@@ -2060,6 +2063,9 @@ function uninstall_spark_conf_impl() {
 
   stopServiceViaRest SPARK
   startServiceViaRest SPARK
+  
+  stopServiceViaRest SPARK2
+  startServiceViaRest SPARK2
 }
 
 function set_sparkdefaults_prop() {
