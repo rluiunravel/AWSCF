@@ -14,7 +14,7 @@
 DATADISK=`/usr/bin/lsblk |grep 100G | awk '{print $1}'`
 echo $DATADISK
 
-/usr/bin/parted -s /dev/${DATADISK} mklabel gpt mkpart primary 0% 100%
+/usr/sbin/parted -s /dev/${DATADISK} mklabel gpt mkpart primary 0% 100%
 /usr/sbin/mkfs.ext4 /dev/${DATADISK}1
 mkdir -p /srv
 echo "/dev/${DATADISK}1  /srv  ext4 defaults 0 0" >> /etc/fstab
