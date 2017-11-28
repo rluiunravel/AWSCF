@@ -1,4 +1,3 @@
-!#/bin/bash
 # Download unravel rpm
 #/usr/bin/wget http://preview.unraveldata.com/img/unravel-4.2-1061.x86_64.EMR.rpm
 
@@ -19,7 +18,7 @@ echo $DATADISK > /tmp/datadisk
 DISKP=`/usr/bin/cat /tmp/datadisk`
 DISKPARD=${DISKP}1
 
-/usr/sbin/mkfs.ext4 /dev/${DISKPARD}
+/usr/sbin/mkfs -t ext4  /dev/${DISKPARD}
 mkdir -p /srv
 echo "/dev/${DISKPARD}  /srv  ext4 defaults 0 0" >> /etc/fstab
 /usr/bin/mount -a
