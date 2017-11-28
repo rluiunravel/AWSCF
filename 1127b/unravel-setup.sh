@@ -26,7 +26,7 @@ echo "/dev/${DATADISK}1  /srv  ext4 defaults 0 0" >> /etc/fstab
 
 echo "Partitioning Disk ${DATADISK}"
 
-#echo -e "o\nn\np\n1\n\n\nw" | fdisk ${DATADISK}
+echo -e "o\nn\np\n1\n\n\nw" | fdisk ${DATADISK}
 
 
 #/usr/sbin/mkfs -t ext4  /dev/${DISKPARD}
