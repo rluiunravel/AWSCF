@@ -31,7 +31,7 @@ echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATADISK}
 DATAPRAP=`cat /tmp/dataprap`
 
 /usr/sbin/mkfs -t ext4 ${DATAPRAP}
-#/usr/bin/mount -a
+/usr/bin/mount -a
 
 # install unravel rpm
 #/usr/bin/rpm  -U unravel-4.2-1061.x86_64.EMR.rpm
