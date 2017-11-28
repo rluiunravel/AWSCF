@@ -7,7 +7,10 @@
 /usr/bin/yum install -y lzop
 /usr/bin/systemctl enable ntpd
 /usr/bin/systemctl start ntpd
-/usr/bin/setenforce 0
+
+#/usr/bin/setenforce 0
+sleep 30
+
 
 # Prepare disk for unravel
 mkdir -p /srv
@@ -19,7 +22,7 @@ echo "/dev/${DATADISK}1  /srv  ext4 defaults 0 0" >> /etc/fstab
 
 echo "Partitioning Disk ${DATADISK}"
 
-echo -e "o\nn\np\n1\n\n\nw" | fdisk ${DATADISK}
+#echo -e "o\nn\np\n1\n\n\nw" | fdisk ${DATADISK}
 
 
 #/usr/sbin/mkfs -t ext4  /dev/${DISKPARD}
