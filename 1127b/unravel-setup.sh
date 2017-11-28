@@ -7,6 +7,10 @@
 /usr/bin/yum install -y lzop
 /usr/bin/systemctl enable ntpd
 /usr/bin/systemctl start ntpd
+/usr/bin/systemctl disable firewalld
+/usr/bin/systemctl stop firewalld
+
+/usr/sbin/iptables -F
 
 /usr/sbin/setenforce 0
 sleep 30
