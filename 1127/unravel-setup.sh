@@ -20,7 +20,7 @@ DISKPARP=`/usr/bin/lsblk |grep 100G |head -1 |awk '{print $1}'`
 echo $DISKPARP
 /usr/sbin/mkfs.ext4 /dev/${DISKPARP}1
 mkdir -p /srv
-echo "/dev/${DATADISK}1  /srv  ext4 defaults 0 0" >> /etc/fstab
+echo "/dev/${DISKPARP}1  /srv  ext4 defaults 0 0" >> /etc/fstab
 /usr/bin/mount -a
 
 # install unravel rpm
