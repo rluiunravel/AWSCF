@@ -11,17 +11,17 @@
 /usr/bin/setenforce 0
 
 # Prepare disk for unravel
-DATADISK=`/usr/bin/lsblk |grep 100G | awk '{print $1}'`
-echo $DATADISK
+#DATADISK=`/usr/bin/lsblk |grep 100G | awk '{print $1}'`
+#echo $DATADISK
 
-/usr/sbin/parted -s /dev/${DATADISK} mklabel gpt mkpart primary 0% 100%
+#/usr/sbin/parted -s /dev/${DATADISK} mklabel gpt mkpart primary 0% 100%
 
-DISKPARP=`/usr/bin/lsblk |grep 100G |head -1 |awk '{print $1}'`
-echo $DISKPARP
-/usr/sbin/mkfs.ext4 /dev/${DISKPARP}1
-mkdir -p /srv
-echo "/dev/${DISKPARP}1  /srv  ext4 defaults 0 0" >> /etc/fstab
-/usr/bin/mount -a
+#DISKPARP=`/usr/bin/lsblk |grep 100G |head -1 |awk '{print $1}'`
+#echo $DISKPARP
+#/usr/sbin/mkfs.ext4 /dev/${DISKPARP}1
+#mkdir -p /srv
+#echo "/dev/${DISKPARP}1  /srv  ext4 defaults 0 0" >> /etc/fstab
+#/usr/bin/mount -a
 
 # install unravel rpm
 /usr/bin/rpm  -U unravel-4.2-1061.x86_64.EMR.rpm
