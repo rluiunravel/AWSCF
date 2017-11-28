@@ -21,14 +21,16 @@ mkdir -p /srv
 
 DATADISK=`/usr/bin/lsblk |grep 100G | awk '{print $1}'`
 echo "/dev/${DATADISK}1  /srv  ext4 defaults 0 0" >> /etc/fstab
+echo "/dev/${DATADISK}1" > /tmp/dataprap
 
 #/usr/sbin/parted -s /dev/${DATADISK} mklabel gpt mkpart primary 0% 100%
 
 echo "Partitioning Disk ${DATADISK}"
 echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATADISK}
 
+DATAPRAP=`cat /tmp/dataprap`
 
-#/usr/sbin/mkfs -t ext4  /dev/${DISKPARD}
+/usr/sbin/mkfs -t ext4 ${DATAPRAP}
 #/usr/bin/mount -a
 
 # install unravel rpm
