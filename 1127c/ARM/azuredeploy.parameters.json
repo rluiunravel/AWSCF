@@ -1,0 +1,21 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "adminUsername": {
+            "value": "centos"
+        },
+        "adminPassword": {
+            "value": "AdminPassword123!"
+        },
+        "vmName": {
+            "value": "MyVMname"
+        },
+        "fileUris": {
+            "value": "https://raw.githubusercontent.com/rluiunravel/AWSCF/master/1127/unravel-setup.sh"
+        },
+        "commandToExecute": {
+            "value": "sh unravel-setup.sh"
+        }
+    }
+}
