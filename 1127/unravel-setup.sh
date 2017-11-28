@@ -8,7 +8,9 @@
 /usr/bin/yum install -y lzop
 /usr/bin/systemctl enable ntpd
 /usr/bin/systemctl start ntpd
-/usr/bin/setenforce 0
+/usr/sbin/setenforce 0
+
+/usr/bin/sleep 30 
 
 # Prepare disk for unravel
 #DATADISK=`/usr/bin/lsblk |grep 100G | awk '{print $1}'`
