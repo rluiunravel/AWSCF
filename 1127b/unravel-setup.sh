@@ -41,4 +41,6 @@ DATAPRAP=`cat /tmp/dataprap`
 # Update Unravel Lic Key into the unravel.properties file
 echo "com.unraveldata.lic=1p6ed4s492012j5rb242rq3x3w702z1l455g501z2z4o2o4lo675555u3h" >> /usr/local/unravel/etc/unravel.properties
 # Starting Unravel daemons
-/etc/init.d/unravel_all.sh start
+# uncomment below will start unravel daemon automatically but within unravel_all.sh start  will have exit status=1.
+# Thus we recommend login to unravel VM and run unravel_all.sh manually
+# /etc/init.d/unravel_all.sh start
