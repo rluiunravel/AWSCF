@@ -3,16 +3,16 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "adminUsername": {
-            "value": "centos"
+            "value": "sshuser"
         },
         "adminPassword": {
-            "value": "AdminPassword123!"
+            "value": "adminPassword123!"
         },
         "vmName": {
-            "value": "MyVMname"
+            "value": "myvmname"
         },
         "fileUris": {
-            "value": "https://raw.githubusercontent.com/rluiunravel/AWSCF/master/1127/unravel-setup.sh"
+            "value": "https://raw.githubusercontent.com/rluiunravel/AWSCF/master/1127b/unravel-setup.sh"
         },
         "commandToExecute": {
             "value": "sh unravel-setup.sh"

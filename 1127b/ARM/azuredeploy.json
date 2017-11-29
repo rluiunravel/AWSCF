@@ -119,7 +119,7 @@
           "dataDisks": [
             {
               "name": "[variables('dataDisk1Name')]",
-              "diskSizeGB": "100",
+              "diskSizeGB": "500",
               "lun": 0,
               "createOption": "Empty"
             }
