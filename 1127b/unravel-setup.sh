@@ -38,8 +38,19 @@ DATAPRAP=`cat /tmp/dataprap`
 
 /usr/bin/sleep 5
 
+
 # Update Unravel Lic Key into the unravel.properties file
+# Obtain a valid unravel Lic Key file ; the following is just non working one
 echo "com.unraveldata.lic=1p6ed4s492012j5rb242rq3x3w702z1l455g501z2z4o2o4lo675555u3h" >> /usr/local/unravel/etc/unravel.properties
+
+
+# Update Azure blob storage account credential in unravel.properties file
+# Update and uncomment the following lines to reflect your Azure blob storage account name and keys
+# echo "com.unraveldata.hdinsight.storage-account-name-1=fs.azure.account.key.STORAGEACCOUNTNAME.blob.core.windows.net" >> /usr/local/unravel/etc/unravel.properties
+# echo "com.unraveldata.hdinsight.primary-access-key=Ondaq2aYMpJf8pCdvtFJ/zARJvMP1DsoFzBKp//4DVQi+hcL5+XsW2XFNI7ppLottPdAi6KwFQ==" >> /usr/local/unravel/etc/unravel.properties
+# echo "com.unraveldata.hdinsight.storage-account-name-2=fs.azure.account.key.STORAGEACCOUNTNAME.blob.core.windows.net" >> /usr/local/unravel/etc/unravel.properties
+# echo "com.unraveldata.hdinsight.secondary-access-key=aL3MFZ/5hP4k1AZkFZzCmWjgEMqe0o6F33gJZxwfQABLaynxpatWY71YnH35LuTeVm6CP1w==#" >> /usr/local/unravel/etc/unravel.properties
+
 # Starting Unravel daemons
 # uncomment below will start unravel daemon automatically but within unravel_all.sh start  will have exit status=1.
 # Thus we recommend login to unravel VM and run unravel_all.sh manually
