@@ -1,4 +1,4 @@
-!#/bin/bash
+#!#/bin/bash
 # Download unravel rpm
 /usr/bin/wget http://preview.unraveldata.com/img/unravel-4.2-1061.x86_64.EMR.rpm
 
@@ -28,7 +28,7 @@
 # install unravel rpm
 /usr/bin/rpm  -U unravel-4.2-1061.x86_64.EMR.rpm
 
-/usr/bin/sleep 15
+# /usr/bin/sleep 15
 
 # Starting Unravel daemons
-/etc/init.d/unravel_all.sh start
+# /etc/init.d/unravel_all.sh start
