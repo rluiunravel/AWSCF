@@ -19,7 +19,7 @@ sleep 30
 # Prepare disk for unravel
 mkdir -p /srv
 
-DATADISK=`/usr/bin/lsblk |grep 100G | awk '{print $1}'`
+DATADISK=`/usr/bin/lsblk |grep 500G | awk '{print $1}'`
 echo "/dev/${DATADISK}1  /srv  ext4 defaults 0 0" >> /etc/fstab
 echo "/dev/${DATADISK}1" > /tmp/dataprap
 
@@ -36,7 +36,9 @@ DATAPRAP=`cat /tmp/dataprap`
 # install unravel rpm
 /usr/bin/rpm  -U unravel-4.2-1061.x86_64.EMR.rpm
 
-#/usr/bin/sleep 15
+/usr/bin/sleep 5
 
+# Update Unravel Lic Key into the unravel.properties file
+echo "com.unraveldata.lic=1p6ed4s492012j5rb242rq3x3w702z1l455g501z2z4o2o4lo675555u3h" >> /usr/local/unravel/etc/unravel.properties
 # Starting Unravel daemons
-#/etc/init.d/unravel_all.sh start
+/etc/init.d/unravel_all.sh start
