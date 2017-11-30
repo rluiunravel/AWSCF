@@ -74,7 +74,7 @@
       "type": "string",
       "defaultValue": "https://raw.githubusercontent.com/adrian-unraveldata/azurecfg/master/cfg/unravel_hdi_bootstrap.sh",
       "metadata": {
-        "description": "A public http(s) uri that points to a script action which will set an environment variable on each node."
+        "description": "A public http(s) uri that points to a script action which will setup unravel  on header worker and edge nodes."
       }
     }
   },
@@ -140,7 +140,7 @@
               },
               "scriptActions": [
                 {
-                  "name": "setenvironmentvariable",
+                  "name": "unravelsetup",
                   "uri": "[parameters('scriptActionUri')]",
                   "parameters": "--unravel-server 10.10.1.29:3000 --spark-version 2.1.0"
                 }
@@ -164,7 +164,7 @@
               },
               "scriptActions": [
                 {
-                  "name": "setenvironmentvariable",
+                  "name": "unravelsetup",
                   "uri": "[parameters('scriptActionUri')]",
                   "parameters": "--unravel-server 10.10.1.29:3000 --spark-version 2.1.0"
                 }
