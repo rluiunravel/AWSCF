@@ -23,8 +23,6 @@ DATADISK=`/usr/bin/lsblk |grep 500G | awk '{print $1}'`
 echo "/dev/${DATADISK}1  /srv  ext4 defaults 0 0" >> /etc/fstab
 echo "/dev/${DATADISK}1" > /tmp/dataprap
 
-#/usr/sbin/parted -s /dev/${DATADISK} mklabel gpt mkpart primary 0% 100%
-
 echo "Partitioning Disk ${DATADISK}"
 echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATADISK}
 
