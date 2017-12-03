@@ -42,6 +42,8 @@ echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA2DISK}
 echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA3DISK}
 
 DATA1PRAP=`cat /tmp/data1prap`
+DATA2PRAP=`cat /tmp/data2prap`
+DATA3PRAP=`cat /tmp/data3prap`
 
 /usr/sbin/mkfs -t ext4 ${DATA1PRAP}
 /usr/sbin/mkfs -t ext4 ${DATA2PRAP}
