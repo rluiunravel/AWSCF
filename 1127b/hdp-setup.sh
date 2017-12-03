@@ -5,6 +5,11 @@
 /usr/bin/yum install -y ntp
 /usr/bin/yum install -y libaio
 /usr/bin/yum install -y lzop
+/usr/bin/yum install -y wget
+/usr/bin/yum install -y unzip
+/usr/bin/yum install -y git
+/usr/bin/yum install -y dos2unix
+
 /usr/bin/systemctl enable ntpd
 /usr/bin/systemctl start ntpd
 /usr/bin/systemctl disable firewalld
@@ -55,6 +60,21 @@ DATA3PRAP=`cat /tmp/data3prap`
 # /usr/bin/rpm  -U unravel-4.2-1064.x86_64.EMR.rpm
 
 /usr/bin/sleep 5
+
+/usr/bin/wget --no-check-certificate https://s3.amazonaws.com/unravelrpm/jdk-8u112-linux-x64.rpm
+
+/usr/bin/yum localinstall -y jdk-8u112-linux-x64.rpm
+echo "export JAVA_HOME=/usr/java/jdk1.8.0_112" >> /etc/profile
+JAVA_HOME=/usr/java/jdk1.8.0_112
+
+/usr/bin/wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.6.0.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
+
+/usr/bin/yum install -y ambari-agent
+
+echo never > /sys/kernel/mm/transparent_hugepage/defrag
+echo never > /sys/kernel/mm/transparent_hugepage/enabled
+echo 0 > /sys/kernel/mm/transparent_hugepage/khugepaged/defrag
+
 
 # Update Unravel Lic Key into the unravel.properties file
 # Obtain a valid unravel Lic Key file ; the following is just non working one
