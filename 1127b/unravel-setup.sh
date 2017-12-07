@@ -13,6 +13,9 @@
 /usr/sbin/iptables -F
 
 /usr/sbin/setenforce 0
+/usr/bin/sed -i 's/enforcing/disabled/g' /etc/selinux/config /etc/selinux/config
+
+
 sleep 30
 
 
