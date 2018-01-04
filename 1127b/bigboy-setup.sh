@@ -22,44 +22,44 @@ sleep 30
 
 
 # Prepare disk for unravel
-mkdir -p /data1
-mkdir -p /data2
-mkdir -p /data3
+# mkdir -p /data1
+# mkdir -p /data2
+# mkdir -p /data3
 
-DATA1DISK=`/usr/bin/lsblk |grep 1001G | awk '{print $1}'`
-DATA2DISK=`/usr/bin/lsblk |grep 1002G | awk '{print $1}'`
-DATA3DISK=`/usr/bin/lsblk |grep 1003G | awk '{print $1}'`
-DATA4DISK=`/usr/bin/lsblk |grep 1004G | awk '{print $1}'`
+#DATA1DISK=`/usr/bin/lsblk |grep 1001G | awk '{print $1}'`
+#DATA2DISK=`/usr/bin/lsblk |grep 1002G | awk '{print $1}'`
+#DATA3DISK=`/usr/bin/lsblk |grep 1003G | awk '{print $1}'`
+#DATA4DISK=`/usr/bin/lsblk |grep 1004G | awk '{print $1}'`
 
-echo "/dev/${DATA1DISK}1  /data1  ext4 defaults 0 0" >> /etc/fstab
-echo "/dev/${DATA2DISK}1  /data2  ext4 defaults 0 0" >> /etc/fstab
-echo "/dev/${DATA3DISK}1  /data3  ext4 defaults 0 0" >> /etc/fstab
-echo "/dev/${DATA4DISK}1  /tmp    ext4 defaults 0 0" >> /etc/fstab
+#echo "/dev/${DATA1DISK}1  /data1  ext4 defaults 0 0" >> /etc/fstab
+#echo "/dev/${DATA2DISK}1  /data2  ext4 defaults 0 0" >> /etc/fstab
+#echo "/dev/${DATA3DISK}1  /data3  ext4 defaults 0 0" >> /etc/fstab
+echo "/dev/sdf1  /tmp    ext4 defaults 0 0" >> /etc/fstab
 
-echo "/dev/${DATA1DISK}1" > /tmp/data1prap
-echo "/dev/${DATA2DISK}1" > /tmp/data2prap
-echo "/dev/${DATA3DISK}1" > /tmp/data3prap
-echo "/dev/${DATA4DISK}1" > /tmp/data4prap
+# echo "/dev/${DATA1DISK}1" > /tmp/data1prap
+# echo "/dev/${DATA2DISK}1" > /tmp/data2prap
+# echo "/dev/${DATA3DISK}1" > /tmp/data3prap
+# echo "/dev/${DATA4DISK}1" > /tmp/data4prap
 
-echo "Partitioning Disk ${DATA1DISK}"
-echo "Partitioning Disk ${DATA2DISK}"
-echo "Partitioning Disk ${DATA3DISK}"
-echo "Partitioning Disk ${DATA4DISK}"
+# echo "Partitioning Disk ${DATA1DISK}"
+# echo "Partitioning Disk ${DATA2DISK}"
+# echo "Partitioning Disk ${DATA3DISK}"
+# echo "Partitioning Disk ${DATA4DISK}"
 
-echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA1DISK}
-echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA2DISK}
-echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA3DISK}
-echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA4DISK}
+#echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA1DISK}
+#echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA2DISK}
+#echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA3DISK}
+echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/sdf
 
-DATA1PRAP=`cat /tmp/data1prap`
-DATA2PRAP=`cat /tmp/data2prap`
-DATA3PRAP=`cat /tmp/data3prap`
-DATA4PRAP=`cat /tmp/data4prap`
+# DATA1PRAP=`cat /tmp/data1prap`
+# DATA2PRAP=`cat /tmp/data2prap`
+# DATA3PRAP=`cat /tmp/data3prap`
+# DATA4PRAP=`cat /tmp/data4prap`
 
-/usr/sbin/mkfs -t ext4 ${DATA1PRAP}
-/usr/sbin/mkfs -t ext4 ${DATA2PRAP}
-/usr/sbin/mkfs -t ext4 ${DATA3PRAP}
-/usr/sbin/mkfs -t ext4 ${DATA4PRAP}
+#/usr/sbin/mkfs -t ext4 ${DATA1PRAP}
+#/usr/sbin/mkfs -t ext4 ${DATA2PRAP}
+#/usr/sbin/mkfs -t ext4 ${DATA3PRAP}
+/usr/sbin/mkfs -t ext4 /dev/sdf1
 
 /usr/bin/rm -rf /tmp/*
 /usr/bin/rm -rf /tmp/.font-unix
