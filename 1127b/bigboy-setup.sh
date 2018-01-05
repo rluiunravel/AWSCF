@@ -29,12 +29,12 @@ sleep 30
 #DATA1DISK=`/usr/bin/lsblk |grep 1001G | awk '{print $1}'`
 #DATA2DISK=`/usr/bin/lsblk |grep 1002G | awk '{print $1}'`
 #DATA3DISK=`/usr/bin/lsblk |grep 1003G | awk '{print $1}'`
-#DATA4DISK=`/usr/bin/lsblk |grep 1004G | awk '{print $1}'`
+DATA4DISK=`/usr/bin/lsblk |grep 1004G | awk '{print $1}'`
 
 #echo "/dev/${DATA1DISK}1  /data1  ext4 defaults 0 0" >> /etc/fstab
 #echo "/dev/${DATA2DISK}1  /data2  ext4 defaults 0 0" >> /etc/fstab
 #echo "/dev/${DATA3DISK}1  /data3  ext4 defaults 0 0" >> /etc/fstab
-echo "/dev/sdf1  /tmp    ext4 defaults 0 0" >> /etc/fstab
+#echo "/dev/sdf1  /tmp    ext4 defaults 0 0" >> /etc/fstab
 
 # echo "/dev/${DATA1DISK}1" > /tmp/data1prap
 # echo "/dev/${DATA2DISK}1" > /tmp/data2prap
@@ -49,8 +49,14 @@ echo "/dev/sdf1  /tmp    ext4 defaults 0 0" >> /etc/fstab
 #echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA1DISK}
 #echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA2DISK}
 #echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA3DISK}
-echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/sdf
+echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA4DISK}
+/usr/sbin/mkfs -t ext4 /dev/${DATA4DISK}1
 
+sleep 5
+
+TUUID=`blkid |grep ext4 | sed 's/"//g' | awk '{print $2}'`
+
+echo "$TUUID  /tmp    ext4 defaults 0 0" >> /etc/fstab
 # DATA1PRAP=`cat /tmp/data1prap`
 # DATA2PRAP=`cat /tmp/data2prap`
 # DATA3PRAP=`cat /tmp/data3prap`
@@ -59,7 +65,6 @@ echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/sdf
 #/usr/sbin/mkfs -t ext4 ${DATA1PRAP}
 #/usr/sbin/mkfs -t ext4 ${DATA2PRAP}
 #/usr/sbin/mkfs -t ext4 ${DATA3PRAP}
-/usr/sbin/mkfs -t ext4 /dev/sdf1
 
 /usr/bin/rm -rf /tmp/*
 /usr/bin/rm -rf /tmp/.font-unix
