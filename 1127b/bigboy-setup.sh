@@ -54,7 +54,7 @@ echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA4DISK}
 
 sleep 5
 
-TUUID=`blkid |grep ext4 | sed 's/"//g' | awk '{print $2}'`
+TUUID=`blkid |grep ext4 |tail -1 | sed 's/"//g' | awk '{print $2}'`
 
 echo "$TUUID  /tmp    ext4 defaults 0 0" >> /etc/fstab
 # DATA1PRAP=`cat /tmp/data1prap`
