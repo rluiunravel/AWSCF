@@ -29,7 +29,8 @@ sleep 30
 #DATA1DISK=`/usr/bin/lsblk |grep 1001G | awk '{print $1}'`
 #DATA2DISK=`/usr/bin/lsblk |grep 1002G | awk '{print $1}'`
 #DATA3DISK=`/usr/bin/lsblk |grep 1003G | awk '{print $1}'`
-DATA4DISK=`/usr/bin/lsblk |grep 1004G | awk '{print $1}'`
+
+#DATA4DISK=`/usr/bin/lsblk |grep 1004G | awk '{print $1}'`
 
 #echo "/dev/${DATA1DISK}1  /data1  ext4 defaults 0 0" >> /etc/fstab
 #echo "/dev/${DATA2DISK}1  /data2  ext4 defaults 0 0" >> /etc/fstab
@@ -49,14 +50,15 @@ DATA4DISK=`/usr/bin/lsblk |grep 1004G | awk '{print $1}'`
 #echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA1DISK}
 #echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA2DISK}
 #echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA3DISK}
-echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA4DISK}
-/usr/sbin/mkfs -t ext4 /dev/${DATA4DISK}1
 
-sleep 5
+#echo -e "o\nn\np\n1\n\n\nw" | fdisk /dev/${DATA4DISK}
+#/usr/sbin/mkfs -t ext4 /dev/${DATA4DISK}1
 
-TUUID=`blkid |grep ext4 |tail -1 | sed 's/"//g' | awk '{print $2}'`
+#sleep 5
 
-echo "$TUUID  /tmp    ext4 defaults 0 0" >> /etc/fstab
+#TUUID=`blkid |grep ext4 |tail -1 | sed 's/"//g' | awk '{print $2}'`
+
+#echo "$TUUID  /tmp    ext4 defaults 0 0" >> /etc/fstab
 # DATA1PRAP=`cat /tmp/data1prap`
 # DATA2PRAP=`cat /tmp/data2prap`
 # DATA3PRAP=`cat /tmp/data3prap`
@@ -66,17 +68,17 @@ echo "$TUUID  /tmp    ext4 defaults 0 0" >> /etc/fstab
 #/usr/sbin/mkfs -t ext4 ${DATA2PRAP}
 #/usr/sbin/mkfs -t ext4 ${DATA3PRAP}
 
-/usr/bin/rm -rf /tmp/*
-/usr/bin/rm -rf /tmp/.font-unix
-/usr/bin/rm -rf /tmp/.ICE-unix
-/usr/bin/rm -rf /tmp/.Test-unix
-/usr/bin/rm -rf /tmp/.ICE-unix
-/usr/bin/rm -rf /tmp/.XIM-unix
+#/usr/bin/rm -rf /tmp/*
+#/usr/bin/rm -rf /tmp/.font-unix
+#/usr/bin/rm -rf /tmp/.ICE-unix
+#/usr/bin/rm -rf /tmp/.Test-unix
+#/usr/bin/rm -rf /tmp/.ICE-unix
+#/usr/bin/rm -rf /tmp/.XIM-unix
 
-/usr/bin/mount -a
+#/usr/bin/mount -a
 
 
-/usr/bin/sleep 5
+#/usr/bin/sleep 5
 
 #/usr/bin/wget --no-check-certificate https://s3.amazonaws.com/unravelrpm/jdk-8u112-linux-x64.rpm
 
