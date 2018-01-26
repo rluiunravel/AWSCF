@@ -59,8 +59,6 @@ echo "${DISKUUID}    /srv   ext4 defaults  0 0" >> /etc/fstab
 echo "com.unraveldata.lic=1p6ed4s492012j5rb242rq3x3w702z1l455g501z2z4o2o4lo675555u3h" >> /usr/local/unravel/etc/unravel.properties
 echo "export CDH_CPATH="/usr/local/unravel/dlib/hdp2.6.x/*"" >> /usr/local/unravel/etc/unravel.ext.sh
 
-
-
 # Update Azure blob storage account credential in unravel.properties file
 # Update and uncomment the following lines to reflect your Azure blob storage account name and keys
 
@@ -78,6 +76,8 @@ if [ $BLOBSTORACCT != "NONE" ] && [ $BLOBPRIACKEY != "NONE" ] && [ $BLOBSECACKEY
 else
    echo "One or more of your blob storage account parameter is invalid, please check your parameter file"
 fi
+
+sleep 3
 
 if [ $DLKSTOREACCT != "NONE" ] && [ $DLKCLIENTAID != "NONE" ] && [ $DLKCLIENTKEY != "NONE" ] && [ $DLKCLITOKEPT != "NONE" ] && [ $DLKCLIROPATH != "NONE" ]; then
 
