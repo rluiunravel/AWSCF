@@ -89,14 +89,13 @@ if [ $DLKSTOREACCT != "NONE" ] && [ $DLKCLIENTAID != "NONE" ] && [ $DLKCLIENTKEY
    echo "# Adding Data Lake Account information, Update and uncomment following lines" >> /usr/local/unravel/etc/unravel.properties
    echo "com.unraveldata.adl.accountFQDN=${DLKSTOREACCT}.azuredatalakestore.net" >> /usr/local/unravel/etc/unravel.properties
    echo "com.unraveldata.adl.clientId=${DLKCLIENTAID}" >> /usr/local/unravel/etc/unravel.properties
-   echo "com.unraveldata.adl.clientKey=${DLKCLIENTKEY}"" >> /usr/local/unravel/etc/unravel.properties
+   echo "com.unraveldata.adl.clientKey=${DLKCLIENTKEY}" >> /usr/local/unravel/etc/unravel.properties
    echo "com.unraveldata.adl.accessTokenEndpoint=${DLKCLITOKEPT}" >> /usr/local/unravel/etc/unravel.properties
    echo "com.unraveldata.adl.clientRootPath=${DLKCLIROPATH}" >> /usr/local/unravel/etc/unravel.properties
 
 else
   echo "One or more of your data lake storge parameter is invalid, please check your parameter file"
 fi
-
 
 # Starting Unravel daemons
 # uncomment below will start unravel daemon automatically but within unravel_all.sh start  will have exit status=1.
