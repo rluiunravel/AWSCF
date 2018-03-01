@@ -51,4 +51,7 @@ echo never > /sys/kernel/mm/transparent_hugepage/defrag
 echo never > /sys/kernel/mm/transparent_hugepage/enabled
 echo 0 > /sys/kernel/mm/transparent_hugepage/khugepaged/defrag
 
-
+HOSTN=`hostname -s`
+IIP=`/usr/sbin/ifconfig eth0 |grep inet |grep -iv inet6 |awk '{ print $2 }'`
+/usr/bin/hostnamectl set-hostname $HOSTN --static
+echo "${IIP}    ${HOSTN}" >> /etc/hosts
