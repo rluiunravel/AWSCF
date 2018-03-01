@@ -23,7 +23,7 @@ sleep 30
 # Prepare disk 
 mkdir -p /srv
 
-DATADISK=`/usr/bin/lsblk |grep 2048G | awk '{print $1}'`
+DATADISK=`/usr/bin/lsblk |grep 2T | awk '{print $1}'`
 echo $DATADISK > /tmp/datadisk
 echo "/dev/${DATADISK}1" > /tmp/dataprap
 
