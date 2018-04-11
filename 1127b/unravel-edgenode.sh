@@ -43,16 +43,18 @@ sudo -u unravel sh -c 'echo "2" > /srv/unravel/zk_2_data/myid'
 sudo -u unravel sh -c 'echo "3" > /srv/unravel/zk_3_data/myid'
 
 ## Install mysql
-
+dpkg --configure -a
+echo "mysql-server mysql-server/root_password password UnravelMySQL123" | debconf-set-selections
+echo "mysql-server mysql-server/root_password_again password UnravelMySQL123" | debconf-set-selections
 apt-get install --assume-yes mysql-server
 
 service mysql start
 
-echo "create database unravel_mysql_prod DEFAULT CHARACTER SET utf8; grant all on unravel_mysql_prod.* TO 'unravel'@'%' IDENTIFIED BY 'CDWOM0hO'; use unravel_mysql_prod; source /usr/local/unravel/mysql_scripts/20170920015500.sql; source /usr/local/unravel/mysql_scripts/20171008153000.sql; source /usr/local/unravel/mysql_scripts/20171202224307.sql; source /usr/local/unravel/mysql_scripts/20180118103500.sql;" | mysql -u root -p
+echo "create database unravel_mysql_prod DEFAULT CHARACTER SET utf8; grant all on unravel_mysql_prod.* TO 'unravel'@'%' IDENTIFIED BY 'CDWOM0hO'; use unravel_mysql_prod; source /usr/local/unravel/mysql_scripts/20170920015500.sql; source /usr/local/unravel/mysql_scripts/20171008153000.sql; source /usr/local/unravel/mysql_scripts/20171202224307.sql; source /usr/local/unravel/mysql_scripts/20180118103500.sql;" | mysql -u root -pUnravelMySQL123
 
 ## Copy all unravel scripts to /etc/init.d/
-chmod -R 755 /usr/local/unravel/init_scritps
-cp -p /usr/local/unravel/init_scritps/* /etc/init.d/
+chmod -R 755 /usr/local/unravel/init_scripts
+cp -p /usr/local/unravel/init_scripts/* /etc/init.d/
 
 ## Completed the phase1 setup
 echo "All phase 1 processes are completed"
