@@ -52,9 +52,8 @@ service mysql start
 
 echo "create database unravel_mysql_prod DEFAULT CHARACTER SET utf8; grant all on unravel_mysql_prod.* TO 'unravel'@'%' IDENTIFIED BY 'CDWOM0hO'; use unravel_mysql_prod; source /usr/local/unravel/mysql_scripts/20170920015500.sql; source /usr/local/unravel/mysql_scripts/20171008153000.sql; source /usr/local/unravel/mysql_scripts/20171202224307.sql; source /usr/local/unravel/mysql_scripts/20180118103500.sql;" | mysql -u root -pUnravelMySQL123
 
-## Copy all unravel scripts to /etc/init.d/
+## change permission on unravel daemon scripts
 chmod -R 755 /usr/local/unravel/init_scripts
-cp -p /usr/local/unravel/init_scripts/* /etc/init.d/
 
 ## Completed the phase1 setup
 echo "All phase 1 processes are completed"
