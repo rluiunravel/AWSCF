@@ -69,8 +69,25 @@ echo "use unravel_mysql_prod; INSERT  IGNORE INTO \`users\` (\`id\`, \`email\`, 
 ## change permission on unravel daemon scripts
 chmod -R 755 /usr/local/unravel/init_scripts
 
+sleep 20
 ## Starting unravel daemons
+/usr/local/unravel/init_scripts/unravel_all.sh stop
+sleep 10
 /usr/local/unravel/init_scripts/unravel_all.sh start
+
+## Checking unravel daemons' status
+/usr/local/unravel/init_scripts/unravel_all.sh status 
+
+# checking unravel kafka is running or not
+KSTATUS=`/usr/local/unravel/init_scripts/unravel_k status |awk '{print $2}'`
+echo "unravel kafak is in $KSTATUS mode"
+
+if [ "$KSTATUS" == "Running" ]; then
+   echo "unravel_k is in running status"
+else
+   echo "unravel_k is not in running status"
+   /usr/local/unravel/init_scripts/unravel_all.sh restart
+fi
 
 ## Completed the phase1 setup
 echo "All phase 1 processes are completed"
