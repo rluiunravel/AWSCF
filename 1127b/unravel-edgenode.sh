@@ -70,7 +70,7 @@ echo "use unravel_mysql_prod; INSERT  IGNORE INTO \`users\` (\`id\`, \`email\`, 
 chmod -R 755 /usr/local/unravel/init_scripts
 
 ## Starting unravel daemons
-# /usr/local/unravel/init_scripts/unravel_all.sh start
+/usr/local/unravel/init_scripts/unravel_all.sh start
 
 ## Completed the phase1 setup
 echo "All phase 1 processes are completed"
